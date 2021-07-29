@@ -36,17 +36,20 @@ function initialPrompt() {
    let userWord = input.question("Let's play some scrabble! Enter a word:");
    return userWord
 };
-console.log(initialPrompt());
 let simpleScore = function(word){
-  return word.length
+    return word.length
 };
 
 let vowelBonusScore = function(word){
 	word = word.toUpperCase()
+  
   let vowels = ['A', 'E', 'I', 'O', 'U'];
   let score = 0
-  for (let i = 0; i < score.length; i++){
+  for (let i = 0; i < word.length; i++){
+    
     if (vowels.includes(word[i])) {
+
+      
       score += 3
     }else{
       score += 1
@@ -59,31 +62,31 @@ let vowelBonusScore = function(word){
 // console.log(vowelBonusScore('JoAnna'));
 
 let scrabbleScore = function (word){
-  word = word.tolowercase();
+  word = word.toLowerCase();
   let score = 0;
-  for (let i = 0; i < score.length; i++)
-  scrabbleScore +=  newPointStructure[word[i]]
+  for (let i = 0; i < word.length; i++)
+  score +=  newPointStructure[word[i]]
   return score
 }
 
 const scoringAlgorithms = [{
-name : "simpleScorer",
+name : "simpleScore",
 description:"Each letter is worth 1 point.",
-scoringFunction : simpleScore,
+scoringFunction : simpleScore
 },{
 name : "Bonus Vowels",
 description : "Vowels are 3 pts, consonants are 1 pt.",
-scoringFunction : vowelBonusScore,
+scoringFunction : vowelBonusScore
 },{
 name : "Scrabble",
 description : "	The traditional scoring algorithm.",
-scoringFunction : scrabbleScore,
+scoringFunction : scrabbleScore
 }];
 function scorerPrompt() {
-  // console.log(`Which scoring algorithm would you like to use: \n`);
+   console.log(`Which scoring algorithm would you like to use: \n`);
   for (let i = 0; i < scoringAlgorithms.length; i++){
     let whichScore = scoringAlgorithms[i];
-    // console.log(i + "-" + whichScore.name + whichscore.description);
+    console.log(i+"-"+whichScore["name"]+":"+whichScore["description"])
   }
 let choice = Number(input.question(`Please enter 0, 1, or 2: `));
 return scoringAlgorithms[choice]
@@ -92,12 +95,11 @@ return scoringAlgorithms[choice]
 
 
 function transform(structure) {
-  let newObject = {}
-  for (const item in structure){
+  const newObject = {}
+  for (let item in structure){
     let letters = structure[item];
     for (let i = 0; i < letters.length; i++){
-      newObject[letters[i]
-       ] = Number(item)
+      newObject[letters[i].toLowerCase()] = Number(item)
     }
   }
   return newObject
@@ -109,9 +111,9 @@ let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
    let word1 = initialPrompt();
-   let scoreSometing = scorerPrompt()
+   let scoreSometing = scorerPrompt().scoringFunction
    let finalScore = scoreSometing(word1);
-  //  console.log(`Score for ${word1}: ${finalScore}`);
+   console.log(`Score for ${word1}: ${finalScore}`);
 }
 
 // Don't write any code below this line //
